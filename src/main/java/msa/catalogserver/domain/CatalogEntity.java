@@ -31,3 +31,4 @@ public class CatalogEntity implements Serializable{
     @CreationTimestamp
     private Date createdAt;
 }
+
