@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,6 +33,11 @@ public class CatalogEntity implements Serializable{
     @Column(nullable = false)
     private Integer unitPrice;
 
+    @Column(nullable = false)
+    private Integer salesRate;
+
+    // 카테고리도 추가해야함. enum으ㅡ
+
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name="inventory_id")
     private Inventory inventory;
@@ -39,6 +45,9 @@ public class CatalogEntity implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="brand_id")
     private Brand brand;
+
+    @OneToMany(mappedBy = "catalog")
+    private List<Scrap> scraps;
 
     @Column(nullable = false,updatable = false,insertable = false)
     @CreationTimestamp
