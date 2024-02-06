@@ -1,9 +1,8 @@
 package msa.catalogserver.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
 import lombok.Data;
-import msa.catalogserver.domain.CatalogEntity;
+import msa.catalogserver.domain.Product;
 
 import java.util.Date;
 
@@ -24,7 +23,7 @@ public class ResponseCatalog {
         this.createdAt = createdAt;
     }
 
-    public static ResponseCatalog from(CatalogEntity catalogEntity) {
+    public static ResponseCatalog from(Product catalogEntity) {
         return new ResponseCatalog(catalogEntity.getProductId(),catalogEntity.getProductName(),catalogEntity.getUnitPrice(), catalogEntity.getStock(), catalogEntity.getCreatedAt());
     }
 }

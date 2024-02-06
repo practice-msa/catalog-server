@@ -2,8 +2,6 @@ package msa.catalogserver.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -13,12 +11,12 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "catalog")
+@Table(name = "product")
 @NoArgsConstructor
-public class CatalogEntity implements Serializable{
+public class Product implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="catalogEntity_id")
+    @Column(name="product_id")
     private Long id;
 
     @Column(nullable = false)
@@ -42,11 +40,11 @@ public class CatalogEntity implements Serializable{
     @JoinColumn(name="inventory_id")
     private Inventory inventory;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name="brand_id")
     private Brand brand;
 
-    @OneToMany(mappedBy = "catalog")
+    @OneToMany(mappedBy = "product")
     private List<Scrap> scraps;
 
     @Column(nullable = false,updatable = false,insertable = false)

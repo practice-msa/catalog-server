@@ -1,7 +1,7 @@
 package msa.catalogserver.service;
 
-import msa.catalogserver.domain.CatalogEntity;
+import msa.catalogserver.domain.Product;
 
 public interface CatalogService {
-    Iterable<CatalogEntity> getAllCatalogs();
+    Iterable<Product> getAllCatalogs();
 }

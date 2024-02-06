@@ -23,5 +23,5 @@ public class Brand {
     private String description;
 
     @OneToMany(mappedBy = "brand")
-    private List<CatalogEntity> catalogs;
+    private List<Product> products;
 }

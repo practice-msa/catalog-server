@@ -14,7 +14,7 @@ public class Inventory {
     private Long id;
 
     @OneToOne(mappedBy = "inventory")
-    private CatalogEntity catalog;
+    private Product product;
 
     private int stock;
 

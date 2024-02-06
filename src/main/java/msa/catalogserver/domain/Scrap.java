@@ -17,7 +17,7 @@ public class Scrap {
     private String user_id;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "catalogEntity_id")
-    private CatalogEntity catalog;
+    @JoinColumn(name = "product_id")
+    private Product catalog;
 
 }
