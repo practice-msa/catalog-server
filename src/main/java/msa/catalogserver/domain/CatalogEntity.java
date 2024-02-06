@@ -17,15 +17,28 @@ import java.util.Date;
 public class CatalogEntity implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="catalogEntity_id")
     private Long id;
+
     @Column(nullable = false)
     private String productId;
+
     @Column(nullable = false)
     private String productName;
+
     @Column(nullable = false)
     private Integer stock;
+
     @Column(nullable = false)
     private Integer unitPrice;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name="inventory_id")
+    private Inventory inventory;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="brand_id")
+    private Brand brand;
 
     @Column(nullable = false,updatable = false,insertable = false)
     @CreationTimestamp
