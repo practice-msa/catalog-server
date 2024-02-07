@@ -8,14 +8,14 @@ import java.util.Date;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ResponseCatalog {
+public class ResponseProduct {
     private String productId;
     private String productName;
     private Integer unitPrice;
     private Integer stock;
     private Date createdAt;
 
-    public ResponseCatalog(String productId, String productName, Integer unitPrice, Integer stock, Date createdAt) {
+    public ResponseProduct(String productId, String productName, Integer unitPrice, Integer stock, Date createdAt) {
         this.productId = productId;
         this.productName = productName;
         this.unitPrice = unitPrice;
@@ -23,7 +23,7 @@ public class ResponseCatalog {
         this.createdAt = createdAt;
     }
 
-    public static ResponseCatalog from(Product catalogEntity) {
-        return new ResponseCatalog(catalogEntity.getProductId(),catalogEntity.getProductName(),catalogEntity.getUnitPrice(), catalogEntity.getStock(), catalogEntity.getCreatedAt());
+    public static ResponseProduct from(Product product) {
+        return new ResponseProduct(product.getProductId(),product.getProductName(),product.getUnitPrice(), product.getStock(), product.getCreatedAt());
     }
 }
