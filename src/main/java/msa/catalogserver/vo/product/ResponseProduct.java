@@ -1,4 +1,4 @@
-package msa.catalogserver.vo;
+package msa.catalogserver.vo.product;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -9,21 +9,17 @@ import java.util.Date;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseProduct {
-    private String productId;
     private String productName;
     private Integer unitPrice;
-    private Integer stock;
     private Date createdAt;
 
-    public ResponseProduct(String productId, String productName, Integer unitPrice, Integer stock, Date createdAt) {
-        this.productId = productId;
+    public ResponseProduct(String productName, Integer unitPrice, Date createdAt) {
         this.productName = productName;
         this.unitPrice = unitPrice;
-        this.stock = stock;
         this.createdAt = createdAt;
     }
 
     public static ResponseProduct from(Product product) {
-        return new ResponseProduct(product.getProductId(),product.getProductName(),product.getUnitPrice(), product.getStock(), product.getCreatedAt());
+        return new ResponseProduct(product.getProductName(),product.getUnitPrice(), product.getCreatedAt());
     }
 }
