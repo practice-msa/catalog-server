@@ -5,6 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CatalogRepository extends CrudRepository<Product,Long> {
+public interface ProductRepository extends CrudRepository<Product,Long> {
     Product findByProductId(String productId);
+
+    // 상품 저장
+
 }
