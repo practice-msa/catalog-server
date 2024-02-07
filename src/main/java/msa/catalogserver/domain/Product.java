@@ -1,5 +1,7 @@
 package msa.catalogserver.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,6 +15,8 @@ import java.util.List;
 @Entity
 @Table(name = "product")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Product implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,19 +24,16 @@ public class Product implements Serializable{
     private Long id;
 
     @Column(nullable = false)
-    private String productId;
-
-    @Column(nullable = false)
     private String productName;
-
-    @Column(nullable = false)
-    private Integer stock;
 
     @Column(nullable = false)
     private Integer unitPrice;
 
     @Column(nullable = false)
     private Integer salesRate;
+
+    @Column(nullable = false)
+    private String imgUrl;
 
     // 카테고리도 추가해야함. enum으ㅡ
 
@@ -47,7 +48,7 @@ public class Product implements Serializable{
     @OneToMany(mappedBy = "product")
     private List<Scrap> scraps;
 
-    @Column(nullable = false,updatable = false,insertable = false)
+    @Column(nullable = true, updatable = false, insertable = false)
     @CreationTimestamp
     private Date createdAt;
 }
