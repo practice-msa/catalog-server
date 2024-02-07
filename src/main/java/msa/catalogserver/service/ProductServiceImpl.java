@@ -10,10 +10,12 @@ import msa.catalogserver.repository.BrandRepository;
 import msa.catalogserver.repository.ProductRepository;
 import msa.catalogserver.vo.product.RequestCreateProduct;
 import msa.catalogserver.vo.product.RequestUpdateProduct;
+import msa.catalogserver.vo.product.ResponseGetProduct;
 import msa.catalogserver.vo.product.ResponseProduct;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -58,6 +60,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseProduct getByProductId(String productId) {
         return null;
+    }
+
+    @Override
+    public ResponseGetProduct getByProductName(String productName) {
+        Optional<Product> existingProductOptional = productRepository.findByProductName(productName);
+        if(existingProductOptional.isPresent()){
+            return ResponseGetProduct.from(existingProductOptional.get());
+        }
+        else{
+            return ResponseGetProduct.builder().build();
+        }
     }
 
     @Override

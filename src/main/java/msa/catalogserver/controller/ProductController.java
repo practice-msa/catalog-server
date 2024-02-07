@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import msa.catalogserver.domain.Product;
 import msa.catalogserver.service.ProductService;
 import msa.catalogserver.vo.product.RequestCreateProduct;
+import msa.catalogserver.vo.product.ResponseGetProduct;
 import msa.catalogserver.vo.product.ResponseProduct;
 import org.springframework.core.env.Environment;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,6 @@ public class ProductController {
 
     @RequestMapping("/health_check")
     public String status(){
-
         return String.format("catalog service Port %s",env.getProperty("local.server.port"));
     }
 
@@ -37,11 +38,22 @@ public class ProductController {
 //        return ResponseEntity.status(HttpStatus.OK).body(result);
 //    }
 
-    @PostMapping("/catalog")
+    @PostMapping("/product")
     public ResponseEntity<String> createProduct(@RequestBody RequestCreateProduct requestCreateProduct){
         productService.createProduct(requestCreateProduct);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("성공");
 
+    }
+
+    @GetMapping("/product/{productName}")
+    public ResponseEntity<ResponseGetProduct> getProductByName(@PathVariable String productName){
+        ResponseGetProduct responseGetProduct = productService.getByProductName(productName);
+
+        if (responseGetProduct.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetProduct);
+        } else {
+            return ResponseEntity.status(HttpStatus.FOUND).body(responseGetProduct);
+        }
     }
 }
