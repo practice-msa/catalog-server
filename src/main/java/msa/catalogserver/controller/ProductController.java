@@ -6,6 +6,7 @@ import msa.catalogserver.service.ProductService;
 import msa.catalogserver.vo.product.RequestCreateProduct;
 import msa.catalogserver.vo.product.ResponseGetProduct;
 import msa.catalogserver.vo.product.ResponseProduct;
+import msa.catalogserver.vo.product.ResponseProductTop10;
 import org.springframework.core.env.Environment;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -55,5 +56,10 @@ public class ProductController {
         } else {
             return ResponseEntity.status(HttpStatus.FOUND).body(responseGetProduct);
         }
+    }
+
+    @GetMapping("/top/products")
+    public ResponseEntity<List<ResponseProductTop10>> getProductTop10(){
+        return ResponseEntity.status((HttpStatus.FOUND)).body(productService.getProductTop10());
     }
 }

@@ -8,16 +8,15 @@ import msa.catalogserver.domain.Inventory;
 import msa.catalogserver.domain.Product;
 import msa.catalogserver.repository.BrandRepository;
 import msa.catalogserver.repository.ProductRepository;
-import msa.catalogserver.vo.product.RequestCreateProduct;
-import msa.catalogserver.vo.product.RequestUpdateProduct;
-import msa.catalogserver.vo.product.ResponseGetProduct;
-import msa.catalogserver.vo.product.ResponseProduct;
+import msa.catalogserver.vo.product.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Data
 @Slf4j
@@ -26,6 +25,13 @@ import java.util.UUID;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
+
+    @Override
+    public List<ResponseProductTop10> getProductTop10() {
+        return productRepository.findProductTop10().stream()
+                .map(ResponseProductTop10::from)
+                .collect(Collectors.toList());
+    }
 
     @Override
     @Transactional

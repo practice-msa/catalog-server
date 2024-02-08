@@ -1,10 +1,9 @@
 package msa.catalogserver.service;
 
 import msa.catalogserver.domain.Product;
-import msa.catalogserver.vo.product.RequestCreateProduct;
-import msa.catalogserver.vo.product.RequestUpdateProduct;
-import msa.catalogserver.vo.product.ResponseGetProduct;
-import msa.catalogserver.vo.product.ResponseProduct;
+import msa.catalogserver.vo.product.*;
+
+import java.util.List;
 
 public interface ProductService {
     Iterable<Product> getAllProducts();
@@ -20,5 +19,7 @@ public interface ProductService {
     ResponseGetProduct getByProductName(String productName);
 
     void deleteByProductId(String productId);
+
+    List<ResponseProductTop10> getProductTop10();
 
 }
