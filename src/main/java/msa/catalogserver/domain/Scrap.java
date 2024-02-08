@@ -1,11 +1,12 @@
 package msa.catalogserver.domain;
 
+import lombok.Data;
 import lombok.Getter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Data
 @Table(name = "scrap")
 public class Scrap {
     @Id
@@ -16,7 +17,7 @@ public class Scrap {
     @Column(nullable = false)
     private String user_id;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 

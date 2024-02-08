@@ -45,11 +45,11 @@ public class Product implements Serializable{
     @JoinColumn(name="brand_id")
     private Brand brand;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
     private List<Scrap> scraps;
 
-    @Column(nullable = true, updatable = false, insertable = false)
-    @CreationTimestamp
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 }
 
