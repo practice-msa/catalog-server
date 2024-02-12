@@ -14,6 +14,7 @@ public class RequestCreateProduct {
     private String imgUrl;
     private Integer stock;
     private String brandName;
+    private String categoryName;
 
     public Product toEntity(Brand brand, Inventory inventory){
         return Product.builder()
@@ -23,6 +24,7 @@ public class RequestCreateProduct {
                 .unitPrice(unitPrice)
                 .inventory(inventory)
                 .productName(productName)
+                .categoryName(categoryName)
                 .createdAt(new Date())
                 .build();
     }

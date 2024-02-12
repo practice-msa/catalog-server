@@ -15,6 +15,7 @@ public class ResponseGetProduct {
     private String imgUrl;
     private String brandName;
     private Integer stock;
+    private String categoryName;
 
     public static ResponseGetProduct from(Product product){
         return ResponseGetProduct.builder()
@@ -24,6 +25,7 @@ public class ResponseGetProduct {
                 .imgUrl(product.getImgUrl())
                 .brandName(product.getBrand().getName())
                 .stock(product.getInventory().getStock())
+                .categoryName(product.getCategoryName())
                 .build();
     }
 

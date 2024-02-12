@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import msa.catalogserver.domain.Category;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,6 +18,7 @@ public class RequestCreateCategory {
     public Category toEntity(){
         return Category.builder()
                 .name(name)
+                .children(new ArrayList<>())
                 .build();
     }
 

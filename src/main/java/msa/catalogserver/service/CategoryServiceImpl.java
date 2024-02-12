@@ -1,21 +1,28 @@
 package msa.catalogserver.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import msa.catalogserver.domain.Category;
+import msa.catalogserver.domain.Product;
 import msa.catalogserver.repository.CategoryRepository;
+import msa.catalogserver.repository.ProductRepository;
 import msa.catalogserver.vo.category.RequestCreateCategory;
 import msa.catalogserver.vo.category.ResponseGetCategory;
+import msa.catalogserver.vo.category.ResponseProductByCategory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CategoryServiceImpl implements CategoryService{
     private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
     @Override
     @Transactional
     public void createCategory(RequestCreateCategory requestCreateCategory) {
@@ -42,6 +49,21 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
+    public List<ResponseProductByCategory> getProductsByCategoryName(String categoryName) {
+        Optional<Category> categoryOptional = categoryRepository.findByName(categoryName);
+        if(categoryOptional.isPresent()){
+            Category category = categoryOptional.get();
+            log.info(category.getName());
+            List<Product> products = new ArrayList<>();
+            findChildren(category,products);
+            log.info(products.get(1).getProductName());
+            return products.stream().map(ResponseProductByCategory::from).collect(Collectors.toList());
+
+        }
+        return null;
+    }
+
+    @Override
     public List<ResponseGetCategory> getCategoryByName(String name) {
         Optional<Category> category = categoryRepository.findByName(name);
         if(category.isPresent()){
@@ -50,6 +72,18 @@ public class CategoryServiceImpl implements CategoryService{
         }
         else {
             return null;
+        }
+    }
+
+    private void findChildren(Category category, List<Product> products){
+        if(category.getChildren().isEmpty()){
+            List<Product> products1 = productRepository.findByCategoryName(category.getName());
+            products.addAll(products1);
+            return;
+        }else{
+            for (Category child : category.getChildren()) {
+                findChildren(child, products);
+            }
         }
     }
 }

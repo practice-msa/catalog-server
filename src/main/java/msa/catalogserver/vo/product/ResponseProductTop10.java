@@ -15,6 +15,7 @@ public class ResponseProductTop10 {
     private String imgUrl;
     private String brandName;
     private Integer stock;
+    private String categoryName;
 
     public static ResponseProductTop10 from(Product product){
         return ResponseProductTop10.builder()
@@ -24,6 +25,7 @@ public class ResponseProductTop10 {
                 .imgUrl(product.getImgUrl())
                 .brandName(product.getBrand().getName())
                 .stock(product.getInventory().getStock())
+                .categoryName(product.getCategoryName())
                 .build();
     }
 }

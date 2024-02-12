@@ -17,4 +17,6 @@ public interface ProductRepository extends CrudRepository<Product,Long> {
     // 상위 상품 10개 가져오기
     @Query("select p from Product p join p.inventory order by p.salesRate desc")
     List<Product> findProductTop10();
+
+    List<Product> findByCategoryName(String categoryName);
 }
