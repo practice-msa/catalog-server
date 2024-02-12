@@ -5,15 +5,19 @@ import lombok.Builder;
 import lombok.Data;
 import msa.catalogserver.domain.Category;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @Builder
-public class ResponseGetCategory {
-    private String childrenName;
+public class RequestCreateCategory {
+    private String parentCategoryName;
+    private String name;
 
-    public static ResponseGetCategory from(Category category){
-        return ResponseGetCategory.builder()
-                .childrenName(category.getName())
+    public Category toEntity(){
+        return Category.builder()
+                .name(name)
                 .build();
     }
+
 }
