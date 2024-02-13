@@ -28,8 +28,7 @@ public class ScrapServiceImpl implements ScrapService{
             return true;
         }
         else{
-            // 예외 처리해야함
-            return false;
+            throw new IllegalArgumentException("존재하지 않는 상품 입니다.");
         }
     }
 }

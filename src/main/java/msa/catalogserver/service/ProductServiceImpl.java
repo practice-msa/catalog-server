@@ -52,9 +52,7 @@ public class ProductServiceImpl implements ProductService {
             productRepository.save(product);
             // 아마 여기서 나중에 해당 제대로 실행되었다는 Response 값을 줘야함
         } else {
-            // 기존 브랜드가 존재하지 않는 경우, 새로운 브랜드 생성
-            // 예외 발생 시킬 예정
-            // Exeption
+            throw new IllegalArgumentException("존재하지 않는 브랜드 입니다.");
         }
     }
 

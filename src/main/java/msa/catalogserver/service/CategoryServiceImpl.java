@@ -32,6 +32,7 @@ public class CategoryServiceImpl implements CategoryService{
             String parentCategoryName = requestCreateCategory.getParentCategoryName();
             Optional<Category> parent = categoryRepository.findByName(parentCategoryName);
             // 만약 없으면 예외처리하는 코드 추가해야함.
+            if(parent.isEmpty()) throw new IllegalArgumentException("존재하지 않는 부모 카테고리입니다.");
 
             Category existingCategoryOptional = parent.get();
             category.setDepth(existingCategoryOptional.getDepth()+1);
@@ -41,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService{
         }
         else{
             if(categoryRepository.existsByName(category.getName())){
-                //throw new RuntimeException("동일한 이름의 카테고리 존재");
+                throw new IllegalArgumentException("동일한 이름의 카테고리 존재");
             }
             category.setDepth(0);
         }
@@ -60,7 +61,9 @@ public class CategoryServiceImpl implements CategoryService{
             return products.stream().map(ResponseProductByCategory::from).collect(Collectors.toList());
 
         }
-        return null;
+        else{
+            throw new IllegalArgumentException("존재하지 않는 카테고리입니다.");
+        }
     }
 
     @Override
