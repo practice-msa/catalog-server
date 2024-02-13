@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/catalog-service")
 @RequiredArgsConstructor
 public class ProductController {
     private final Environment env;

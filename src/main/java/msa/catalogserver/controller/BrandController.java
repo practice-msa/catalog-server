@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/brand")
 @RequiredArgsConstructor
 public class BrandController {
     private final BrandService brandService;
 
-    @PostMapping("/")
+    @PostMapping("/brand")
     public ResponseEntity<String> createNewBrand(@RequestBody RequestCreateBrand requestCreateBrand){
 
         brandService.registerBrand(requestCreateBrand);
@@ -25,7 +24,7 @@ public class BrandController {
 
     }
 
-    @GetMapping("/{brandName}")
+    @GetMapping("/brand/{brandName}")
     public ResponseEntity<List<ResponseBrandProduct>> getBrandProductByName(@PathVariable String brandName){
         List<ResponseBrandProduct> responseBrandProducts = brandService.getBrandProduct(brandName);
         return ResponseEntity.status(HttpStatus.FOUND).body(responseBrandProducts);
