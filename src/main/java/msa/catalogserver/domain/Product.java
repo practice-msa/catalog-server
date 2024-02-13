@@ -35,6 +35,9 @@ public class Product implements Serializable{
     @Column(nullable = false)
     private String imgUrl;
 
+    @Column(nullable = false)
+    private String categoryName;
+
     // 카테고리도 추가해야함. enum으ㅡ
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
