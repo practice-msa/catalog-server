@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,7 @@ public class BrandController {
     private final BrandService brandService;
 
     @PostMapping("/brand")
-    public ResponseEntity<String> createNewBrand(@RequestBody RequestCreateBrand requestCreateBrand){
+    public ResponseEntity<String> createNewBrand(@RequestBody @Valid RequestCreateBrand requestCreateBrand){
 
         brandService.registerBrand(requestCreateBrand);
         return ResponseEntity.status(HttpStatus.CREATED).body("성공");

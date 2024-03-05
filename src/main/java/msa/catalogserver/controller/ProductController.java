@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class ProductController {
 //    }
 
     @PostMapping("/product")
-    public ResponseEntity<String> createProduct(@RequestBody RequestCreateProduct requestCreateProduct){
+    public ResponseEntity<String> createProduct(@RequestBody @Valid RequestCreateProduct requestCreateProduct){
         productService.createProduct(requestCreateProduct);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("성공");
