@@ -1,6 +1,7 @@
 package msa.catalogserver.controller;
 
 import lombok.RequiredArgsConstructor;
+import msa.catalogserver.dto.response.ApiResponse;
 import msa.catalogserver.service.BrandService;
 import msa.catalogserver.vo.brand.RequestCreateBrand;
 import msa.catalogserver.vo.brand.ResponseBrandProduct;
@@ -18,17 +19,17 @@ public class BrandController {
     private final BrandService brandService;
 
     @PostMapping("/brand")
-    public ResponseEntity<String> createNewBrand(@RequestBody @Valid RequestCreateBrand requestCreateBrand){
+    public ApiResponse<String> createNewBrand(@RequestBody @Valid RequestCreateBrand requestCreateBrand){
 
         brandService.registerBrand(requestCreateBrand);
-        return ResponseEntity.status(HttpStatus.CREATED).body("성공");
+        return new ApiResponse<>(true,"브랜드를 등록하였습니다.",HttpStatus.CREATED,null);
 
     }
 
     @GetMapping("/brand/{brandName}")
-    public ResponseEntity<List<ResponseBrandProduct>> getBrandProductByName(@PathVariable String brandName){
+    public ApiResponse<List<ResponseBrandProduct>> getBrandProductByName(@PathVariable String brandName){
         List<ResponseBrandProduct> responseBrandProducts = brandService.getBrandProduct(brandName);
-        return ResponseEntity.status(HttpStatus.FOUND).body(responseBrandProducts);
+        return new ApiResponse<>(true,responseBrandProducts,HttpStatus.FOUND,null);
 
     }
 }

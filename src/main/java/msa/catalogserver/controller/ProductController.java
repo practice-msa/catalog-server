@@ -2,6 +2,8 @@ package msa.catalogserver.controller;
 
 import lombok.RequiredArgsConstructor;
 import msa.catalogserver.domain.Product;
+import msa.catalogserver.dto.response.ApiResponse;
+import msa.catalogserver.dto.response.ErrorResponse;
 import msa.catalogserver.service.ProductService;
 import msa.catalogserver.vo.product.RequestCreateProduct;
 import msa.catalogserver.vo.product.ResponseGetProduct;
@@ -40,26 +42,27 @@ public class ProductController {
 //    }
 
     @PostMapping("/product")
-    public ResponseEntity<String> createProduct(@RequestBody @Valid RequestCreateProduct requestCreateProduct){
+    public ApiResponse<String> createProduct(@RequestBody @Valid RequestCreateProduct requestCreateProduct){
         productService.createProduct(requestCreateProduct);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("성공");
+        return new ApiResponse<>(true,"상품을 등록하였습니다.",HttpStatus.CREATED,null);
 
     }
 
     @GetMapping("/product/{productName}")
-    public ResponseEntity<ResponseGetProduct> getProductByName(@PathVariable String productName){
+    public ApiResponse<ResponseGetProduct> getProductByName(@PathVariable String productName){
         ResponseGetProduct responseGetProduct = productService.getByProductName(productName);
 
         if (responseGetProduct.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetProduct);
+            return new ApiResponse<>(false,responseGetProduct,HttpStatus.NOT_FOUND,new ErrorResponse("해당 이름의 제품은 없습니다."));
         } else {
-            return ResponseEntity.status(HttpStatus.FOUND).body(responseGetProduct);
+            return new ApiResponse<>(true,responseGetProduct,HttpStatus.FOUND,null);
         }
     }
 
     @GetMapping("/top/products")
-    public ResponseEntity<List<ResponseProductTop10>> getProductTop10(){
-        return ResponseEntity.status((HttpStatus.FOUND)).body(productService.getProductTop10());
+    public ApiResponse<List<ResponseProductTop10>> getProductTop10(){
+        List<ResponseProductTop10> responseProductTop10s = productService.getProductTop10();
+        return new ApiResponse<>(true,responseProductTop10s,HttpStatus.FOUND,null);
     }
 }

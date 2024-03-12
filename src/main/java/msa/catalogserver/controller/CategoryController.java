@@ -3,6 +3,7 @@ package msa.catalogserver.controller;
 
 import lombok.RequiredArgsConstructor;
 import msa.catalogserver.domain.Category;
+import msa.catalogserver.dto.response.ApiResponse;
 import msa.catalogserver.service.CategoryService;
 import msa.catalogserver.vo.category.RequestCreateCategory;
 import msa.catalogserver.vo.category.ResponseGetCategory;
@@ -20,20 +21,20 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/category")
-    public ResponseEntity<String> createCategory(@RequestBody @Valid RequestCreateCategory requestCreateCategory){
+    public ApiResponse<String> createCategory(@RequestBody @Valid RequestCreateCategory requestCreateCategory){
         categoryService.createCategory(requestCreateCategory);
-        return ResponseEntity.status(HttpStatus.CREATED).body("성공");
+        return new ApiResponse<>(true,"카테고리를 등록하였습니다.",HttpStatus.CREATED,null);
     }
 
     @GetMapping("/category/{name}")
-    public ResponseEntity<List<ResponseGetCategory>> getCategoryByName(@PathVariable String name){
+    public ApiResponse<List<ResponseGetCategory>> getCategoryByName(@PathVariable String name){
         List<ResponseGetCategory> categories = categoryService.getCategoryByName(name);
-        return ResponseEntity.status(HttpStatus.FOUND).body(categories);
+        return new ApiResponse<>(true,categories,HttpStatus.FOUND,null);
     }
 
     @GetMapping("/category/{categoryName}/products")
-    public ResponseEntity<List<ResponseProductByCategory>> getProductsByCategoryName(@PathVariable String categoryName){
+    public ApiResponse<List<ResponseProductByCategory>> getProductsByCategoryName(@PathVariable String categoryName){
         List<ResponseProductByCategory> products = categoryService.getProductsByCategoryName(categoryName);
-        return ResponseEntity.status(HttpStatus.FOUND).body(products);
+        return new ApiResponse<>(true,products,HttpStatus.FOUND,null);
     }
 }
