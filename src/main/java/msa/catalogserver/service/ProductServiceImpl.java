@@ -3,6 +3,7 @@ package msa.catalogserver.service;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import msa.catalogserver.aws.S3Service;
 import msa.catalogserver.domain.Brand;
 import msa.catalogserver.domain.Inventory;
 import msa.catalogserver.domain.Product;
@@ -11,8 +12,10 @@ import msa.catalogserver.repository.ProductRepository;
 import msa.catalogserver.vo.product.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.text.html.Option;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
+    private final S3Service  S3Service;
 
     @Override
     public List<ResponseProductTop10> getProductTop10() {
@@ -35,7 +39,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void createProduct(RequestCreateProduct requestCreateProduct) {
+    public void createProduct(RequestCreateProduct requestCreateProduct , MultipartFile multipartFile)
+        throws IOException {
 
         // 기존 브랜드 확인
         Optional<Brand> existingBrandOptional = brandRepository.findByName(requestCreateProduct.getBrandName());
@@ -49,6 +54,8 @@ public class ProductServiceImpl implements ProductService {
             inventory.setStock(requestCreateProduct.getStock());
 
             Product product = requestCreateProduct.toEntity(brand,inventory);
+            String url = S3Service.upload(multipartFile);
+            product.setImgUrl(url);
             productRepository.save(product);
             // 아마 여기서 나중에 해당 제대로 실행되었다는 Response 값을 줘야함
         } else {

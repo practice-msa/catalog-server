@@ -14,8 +14,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +44,9 @@ public class ProductController {
 //    }
 
     @PostMapping("/product")
-    public ApiResponse<String> createProduct(@RequestBody @Valid RequestCreateProduct requestCreateProduct){
-        productService.createProduct(requestCreateProduct);
+    public ApiResponse<String> createProduct(@RequestPart(value="body") @Valid RequestCreateProduct requestCreateProduct,
+                                        @RequestPart(value = "file") MultipartFile multipartFile) throws IOException {
+        productService.createProduct(requestCreateProduct, multipartFile);
 
         return new ApiResponse<>(true,"상품을 등록하였습니다.",HttpStatus.CREATED,null);
 
