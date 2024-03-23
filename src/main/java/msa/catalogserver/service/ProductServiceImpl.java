@@ -85,8 +85,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteByProductId(String productId) {
-
+    public boolean deleteByProductName(String productName) {
+        Optional<Product> product = productRepository.findByProductName(productName);
+        product.ifPresent(product1 -> {
+            String url = product1.getImgUrl();
+            S3Service.delete(url);
+        });
+        return false;
     }
 
     @Override

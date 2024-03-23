@@ -68,4 +68,14 @@ public class ProductController {
         List<ResponseProductTop10> responseProductTop10s = productService.getProductTop10();
         return new ApiResponse<>(true,responseProductTop10s,HttpStatus.FOUND,null);
     }
+
+    @DeleteMapping("/prodct/{productName}")
+    public ApiResponse<String> deleteProductByName(@PathVariable String productName){
+        boolean message = productService.deleteByProductName(productName);
+
+        if(message){
+            return new ApiResponse<>(true,"삭제하였습니다.", HttpStatus.OK,null);
+        }
+        return new ApiResponse<>(false,"실패하였습니다.", HttpStatus.NOT_FOUND,null);
+    }
 }

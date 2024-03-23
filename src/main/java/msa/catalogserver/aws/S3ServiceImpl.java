@@ -19,7 +19,7 @@ public class S3ServiceImpl implements S3Service{
     @Override
     public String upload(MultipartFile file) throws IOException {
         String fileName = file.getOriginalFilename();
-        String fileUrl = "https://" + bucket + ".s3.ap-northeast-2.amazonaws.com/" + file;
+        String fileUrl = "https://" + bucket + ".s3.ap-northeast-2.amazonaws.com/" + fileName;
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(file.getContentType());
@@ -29,9 +29,11 @@ public class S3ServiceImpl implements S3Service{
     }
 
     @Override
-    public String delete(String url) {
-        amazonS3Client.deleteObject(bucket, url);
-        String message = "Delete 성공";
-        return message;
+    public boolean delete(String url) {
+        if(amazonS3Client.doesObjectExist(bucket,url)){
+            amazonS3Client.deleteObject(bucket, url);
+            return true;
+        }
+        return false;
     }
 }

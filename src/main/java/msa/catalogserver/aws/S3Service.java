@@ -10,7 +10,7 @@ public interface S3Service {
     String upload(MultipartFile file) throws IOException;
 
     // 삭제
-    String delete(String url);
+    boolean delete(String url);
 
 
 }

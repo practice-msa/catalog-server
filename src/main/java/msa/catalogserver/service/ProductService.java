@@ -20,7 +20,7 @@ public interface ProductService {
 
     ResponseGetProduct getByProductName(String productName);
 
-    void deleteByProductId(String productId);
+    boolean deleteByProductName(String productName);
 
     List<ResponseProductTop10> getProductTop10();
 
